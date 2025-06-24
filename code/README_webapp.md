@@ -14,3 +14,6 @@ runApp()
 When ready to publish: 
 
 deployApp()
+
+Have a look at golem in shiny engineering(?) 
+https://engineering-shiny.org/golem.html 
