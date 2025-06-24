@@ -9,5 +9,7 @@ library(tidyverse)
 rainfall_to_plot <-   rainfall_to_plot |>
     mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y"))
   
-rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = Value))
+rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = Value))+
+  geom_line()
+  
     

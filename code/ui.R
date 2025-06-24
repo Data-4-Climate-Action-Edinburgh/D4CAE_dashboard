@@ -9,7 +9,7 @@ dataset <- diamonds
 
 fluidPage(
   
-  titlePanel("Edinburgh Temperature by D4CAE"),
+  titlePanel("Edinburgh Rainy Rain by D4CAE"),
   
   sidebarPanel(
     
@@ -28,6 +28,6 @@ fluidPage(
   ),
   
   mainPanel(
-    plotOutput('plot')
+    plotOutput('rainplot')
   )
 )
