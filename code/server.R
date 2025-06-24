@@ -12,10 +12,9 @@ function(input, output){
   rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
   
   dataset <- reactive({
-     diamonds[sample(nrow(diamonds), input$sampleSize),]
+     rainfall_to_plot[sample(nrow(rainfall_to_plot), input$sampleSize),]
     
-    diamonds[sample(nrow(diamonds), input$sampleSize),]
-    
+# do the plot first, in a script, then put here
     
   })
   
