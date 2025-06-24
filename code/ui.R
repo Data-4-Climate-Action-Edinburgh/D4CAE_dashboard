@@ -5,7 +5,9 @@
 library(shiny)
 library(ggplot2)
 
-dataset <- rainfall_to_plot
+dataset <- diamonds 
+# Generates an error when I swop in dataset <- rainfall_to_plot
+# But I'm going to need to do that, to give user input options based on the rain data!?!
 
 fluidPage(
   

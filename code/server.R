@@ -12,7 +12,7 @@ function(input, output){
   rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
   
   # Import data and convert dates
-  rainfall_to_plot <-   rainfall_to_plot_agg |>
+  rainfall_to_plot <-   rainfall_to_plot |>
     mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
   
   dataset <- reactive({
