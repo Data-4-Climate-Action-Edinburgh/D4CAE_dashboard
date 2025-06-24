@@ -7,7 +7,7 @@ Do not rename server.R.
 
 Remember to run the following in the console: 
 
-setwd("dashboard")
+setwd("code")
 library(shiny)
 runApp()
 

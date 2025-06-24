@@ -11,6 +11,7 @@ function(input, output){
   temperature_to_plot <- tibble()
   
   dataset <- reactive({
+    req(input$sampleSize)
     diamonds[sample(nrow(diamonds), input$sampleSize),]
     
     diamonds[sample(nrow(diamonds), input$sampleSize),]
