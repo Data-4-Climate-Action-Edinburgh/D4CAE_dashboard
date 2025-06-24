@@ -17,7 +17,7 @@ function(input, output){
     diamonds[sample(nrow(diamonds), input$sampleSize),]
     
     
-  }, height = 500)
+  })
   
    
 }
