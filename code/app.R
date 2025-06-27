@@ -6,9 +6,7 @@
 library(shiny)
 library(tidyverse)
 
-#dataset <- diamonds 
-# Generates an error when I swop in dataset <- rainfall_to_plot
-# But I'm going to need to do that, to give user input options based on the rain data!?!
+# Go back to https://mastering-shiny.org/basic-app.html
 
 rainfall_to_plot <- tibble()
 rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
