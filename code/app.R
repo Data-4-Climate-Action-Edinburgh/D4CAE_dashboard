@@ -6,9 +6,18 @@
 library(shiny)
 library(tidyverse)
 
-dataset <- diamonds 
+#dataset <- diamonds 
 # Generates an error when I swop in dataset <- rainfall_to_plot
 # But I'm going to need to do that, to give user input options based on the rain data!?!
+
+rainfall_to_plot <- tibble()
+rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
+
+# Import data and convert dates
+rainfall_to_plot <-   rainfall_to_plot |>
+  mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
+
+
 
 # UI (previously in ui.R)
 fluidPage(
@@ -39,12 +48,6 @@ fluidPage(
 # Server (previously in server.R)
 # Process the data
 server <- function(input, output){
-  rainfall_to_plot <- tibble()
-  rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
-  
-  # Import data and convert dates
-  rainfall_to_plot <-   rainfall_to_plot |>
-    mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
   
   dataset <- reactive({
     
