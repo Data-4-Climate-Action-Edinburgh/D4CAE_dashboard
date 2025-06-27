@@ -1,0 +1,58 @@
+# Pauline Ward June 2025
+# RShiny app - a single app.R script containing ui and server
+# Based on Posit tutorial https://shiny.posit.co/r/getstarted/shiny-basics/lesson5/
+
+
+library(shiny)
+library(tidyverse)
+
+dataset <- diamonds 
+# Generates an error when I swop in dataset <- rainfall_to_plot
+# But I'm going to need to do that, to give user input options based on the rain data!?!
+
+# UI (previously in ui.R)
+fluidPage(
+  
+  titlePanel("Edinburgh Rainy Rain from all the stations by D4CAE"),
+  
+  sidebarPanel(
+    
+    sliderInput('rainfall_in_mm', 'Amount of rain', min=1, max=nrow(dataset),
+                value=min(0, nrow(dataset)), step=0.5, round=0),
+    
+    selectInput('x', 'X', names(dataset)),
+    selectInput('y', 'Y', names(dataset), names(dataset)[[2]]),
+    selectInput('rain_station', 'Rain stationnnnn', c('None', names(dataset))),
+    
+    checkboxInput('jitter', 'Jitter'),
+    checkboxInput('smooth', 'Smooth'),
+    
+    selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
+    selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
+  ),
+  
+  mainPanel(
+    plotOutput('rainplot')
+  )
+) 
+
+# Server (previously in server.R)
+# Process the data
+server <- function(input, output){
+  rainfall_to_plot <- tibble()
+  rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
+  
+  # Import data and convert dates
+  rainfall_to_plot <-   rainfall_to_plot |>
+    mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
+  
+  dataset <- reactive({
+    
+    # did the plot first, in wee bit rain script, then put here
+    rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
+      geom_line()
+    
+  })
+  output$rainfall_plot <- renderPlot({dataset})
+  
+}
