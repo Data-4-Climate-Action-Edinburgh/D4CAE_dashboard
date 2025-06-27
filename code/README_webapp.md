@@ -1,9 +1,7 @@
 # README  - dashboard folder
 
 Attempting to plot temperature and rainfall data etc on Posit's shiny.io, 
-following tutorial at https://shiny.posit.co/r/getstarted/ .
-
-Do not rename server.R. 
+following Mastering Shiny.
 
 Remember to run the following in the console: 
 

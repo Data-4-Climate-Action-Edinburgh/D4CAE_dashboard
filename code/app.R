@@ -17,16 +17,17 @@ rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
 rainfall_to_plot <-   rainfall_to_plot |>
   mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
 
-
+dataset <- rainfall_to_plot
 
 # UI (previously in ui.R)
-fluidPage(
+ui <- fluidPage(
+  "briny tiny whiney Pliny", 
   
   titlePanel("Edinburgh Rainy Rain from all the stations by D4CAE"),
   
   sidebarPanel(
     
-    sliderInput('rainfall_in_mm', 'Amount of rain', min=1, max=nrow(dataset),
+    sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(dataset),
                 value=min(0, nrow(dataset)), step=0.5, round=0),
     
     selectInput('x', 'X', names(dataset)),
@@ -35,6 +36,8 @@ fluidPage(
     
     checkboxInput('jitter', 'Jitter'),
     checkboxInput('smooth', 'Smooth'),
+    
+    dateRangeInput(inputId = "myDateRange", label = "Dates for rain, I can't stand the rain"),
     
     selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
     selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
@@ -47,7 +50,7 @@ fluidPage(
 
 # Server (previously in server.R)
 # Process the data
-server <- function(input, output){
+server <- function(input, output, session){
   
   dataset <- reactive({
     
@@ -59,3 +62,5 @@ server <- function(input, output){
   output$rainfall_plot <- renderPlot({dataset})
   
 }
+
+shinyApp(ui, server)
