@@ -17,6 +17,7 @@ rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
 rainfall_to_plot <-   rainfall_to_plot |>
   mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
 
+# Allows the ui to draw the input options from the rainfall data eg col names
 dataset <- rainfall_to_plot
 
 # UI (previously in ui.R)
