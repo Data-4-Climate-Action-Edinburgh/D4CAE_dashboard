@@ -16,18 +16,23 @@ rainfall_to_plot <-   rainfall_to_plot |>
   mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
 
 # Allows the ui to draw the input options from the rainfall data eg col names
-dataset <- rainfall_to_plot
+#
+
+# For follow-along with mastering shiny
+dataset <- ls("package:datasets")
 
 # UI (previously in ui.R)
 ui <- fluidPage(
-  "briny tiny whiney Pliny", 
+  "my knee, tiny, just go on and try me", 
   
-  titlePanel("Edinburgh Rainy Rain from all the stations by D4CAE"),
+  titlePanel("Edinburgh Rain by D4CAE"),
   
   sidebarPanel(
-    
-    sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(dataset),
-                value=min(0, nrow(dataset)), step=0.5, round=0),
+    selectInput("the_dataset", label = "Inbuilt Datasets set", choices = dataset),
+    verbatimTextOutput("summary"),
+    tableOutput("table"),
+  #  sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(dataset),
+    #            value=min(0, nrow(dataset)), step=0.5, round=0),
     
     selectInput('x', 'X', names(dataset)),
     selectInput('y', 'Y', names(dataset), names(dataset)[[2]]),
@@ -40,6 +45,7 @@ ui <- fluidPage(
     
     selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
     selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
+
   ),
   
   mainPanel(
@@ -50,7 +56,15 @@ ui <- fluidPage(
 # Server (previously in server.R)
 # Process the data
 server <- function(input, output, session){
+  output$summary <- renderPrint({
+    dataset <- get(input$dataset, "package:datasets")
+    summary(dataset)
+  })
   
+  output$table <- renderTable({
+    dataset <- get(input$dataset, "package:datasets")
+    dataset
+  })
   dataset <- reactive({
     
     # did the plot first, in wee bit rain script, then put here
