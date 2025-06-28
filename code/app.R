@@ -4,17 +4,17 @@
 library(shiny)
 library(tidyverse)
 
-rainfall_to_plot <- tibble()
-rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
+rainfall_data <- tibble()
+rainfall_data <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
 
 # Import data and convert dates
-rainfall_to_plot <-   rainfall_to_plot |>
+rainfall_data <-   rainfall_data |>
   mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
 
 # Allows the ui to draw the input options from the rainfall data eg col names
-dataset <- rainfall_to_plot
+dataset <- rainfall_data
 
-rain_stations <- unique(rainfall_to_plot$rain_station)
+rain_stations <- unique(rainfall_data$rain_station)
 
 # TBC https://mastering-shiny.org/basic-app.html#server-function terrible examples as usual
 
@@ -24,41 +24,42 @@ ui <- fluidPage(
   titlePanel("Edinburgh Rainfall by D4CAE"),
   
   sidebarPanel(
-    selectInput(inputId = "rain_stations", label = "Optionally, select a rainfall station", choices = c(None=',', rain_stations)),
-    verbatimTextOutput("summary"),
-    tableOutput("table"),
+    selectInput(inputId = "chosen_rain_stations", label = "Optionally, select a rainfall station", choices = c(None=',', rain_stations)),
     sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(dataset),
                 value=min(0, nrow(dataset)), step=0.5, round=0),
     
-#    selectInput('rain_station', 'Rain stationnnnn', c('None', names(dataset))),
-    
-    checkboxInput('jitter', 'Jitter'),
-    checkboxInput('smooth', 'Smooth'),
-    
     dateRangeInput(inputId = "myDateRange", label = "Dates for rain, walking in the rain"),
-    
-    selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
-    selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
 
   ),
   
   mainPanel(
-   # plotOutput('rainplot')
+    verbatimTextOutput("nice_summary"),
+    
+    tableOutput("fable_table"),
+    
+ #    plotOutput('rainplot')
   )
 ) 
 
-# Server (previously in server.R)
-# Process the data
+# Server - Process the data
 server <- function(input, output, session){
-  output$summary <- renderPrint({
-    dataset <- get(the_HW_input$dataset, "package:datasets")
-    summary(dataset)
+  
+  output$nice_summary <- renderPrint({
+    
+    # get input$chosen etc produces an error wrong first arg
+    #selected_stn <- get(input$chosen_rain_station)
+    
+    the_relevant_data <- rainfall_data |>
+      filter(str_detect(rain_station, "Murray")) # selected_stn)) 
+    
+    summary(the_relevant_data)
   })
   
-  output$table <- renderTable({
-    dataset <- get(the_HW_input$dataset, "package:datasets")
-    dataset
+  output$fable_table <- renderTable({
+    dataset_pour_la_table <- get(input$chosen_rain_station)
+    dataset_pour_la_table
   })
+  
   dataset <- reactive({
     
     # did the plot first, in wee bit rain script, then put here
