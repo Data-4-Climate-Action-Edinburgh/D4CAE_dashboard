@@ -35,7 +35,7 @@ ui <- fluidPage(
   mainPanel(
     verbatimTextOutput("nice_summary"),
     
-    tableOutput("fable_table"),
+    tableOutput("fable_table")
     
  #    plotOutput('rainplot')
   )
@@ -45,10 +45,10 @@ ui <- fluidPage(
 server <- function(input, output, session){
   
   output$nice_summary <- renderPrint({
+    # not working
+   # selected_stn <- get(input$chosen_rain_stations)
     
-    # get input$chosen etc produces an error wrong first arg
-    #selected_stn <- get(input$chosen_rain_station)
-    
+    # For now, just narrow down with hard-wired choice, 'Mint'
     the_relevant_data <- rainfall_data |>
       filter(str_detect(rain_station, "Murray")) # selected_stn)) 
     
@@ -56,13 +56,18 @@ server <- function(input, output, session){
   })
   
   output$fable_table <- renderTable({
-    dataset_pour_la_table <- get(input$chosen_rain_station)
-    dataset_pour_la_table
+    # not working? 
+    #dataset_pour_la_table <- get(input$chosen_rain_stations)
+    #dataset_pour_la_table
+    
+    # workaround, just display narrowed down table
+    rainfall_data |>
+      filter(str_detect(rain_station, "Murray"))
   })
   
   dataset <- reactive({
     
-    # did the plot first, in wee bit rain script, then put here
+    # did the plot first, in wee bit rain script, then put here 
  #   rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
   #    geom_line()
     
