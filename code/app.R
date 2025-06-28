@@ -19,20 +19,12 @@ ui <- fluidPage(
   
   sidebarPanel(
     selectInput(inputId = "dataset", label = "Inbuilt Datasets set", choices = dataset),
-    verbatimTextOutput("lovely_summary"),
     tableOutput("troubled_table"),
-
- 
-    
-    selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
-    selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
 
   ),
   
   mainPanel(
- #   selectInput('x', 'X', names(dataset)),
-#    selectInput('y', 'Y', names(dataset), names(dataset)[[2]]),
-    
+    verbatimTextOutput("lovely_summary"),
     checkboxInput('jitter', 'Jitter'),
     checkboxInput('smooth', 'Smooth'),
     
@@ -43,8 +35,8 @@ ui <- fluidPage(
 # Server (previously in server.R)
 # Process the data
 server <- function(input, output, session){
-  output$yummy_summary <- renderPrint({
-    dataset <- get(input$chosen_inbuilt_dataset, "are you familiar with package:datasets")
+  output$lovely_summary <- renderPrint({
+    dataset <- get(input$dataset, "package:datasets")
     summary(dataset)
   })
   
