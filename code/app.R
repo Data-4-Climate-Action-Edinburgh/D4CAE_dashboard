@@ -1,56 +1,73 @@
 # Pauline Ward June 2025
 # RShiny app - a single app.R script containing ui and server
 
-
 library(shiny)
 library(tidyverse)
 
-# Go back to https://mastering-shiny.org/basic-app.html
+rainfall_to_plot <- tibble()
+rainfall_to_plot <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
+
+# Import data and convert dates
+rainfall_to_plot <-   rainfall_to_plot |>
+  mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
+
+# Allows the ui to draw the input options from the rainfall data eg col names
+dataset <- rainfall_to_plot
+
+rain_stations <- unique(rainfall_to_plot$rain_station)
+
 # TBC https://mastering-shiny.org/basic-app.html#server-function terrible examples as usual
 
-# For follow-along with mastering shiny
-# do not rename, apparently
-dataset <- ls("package:datasets")
-
-# UI (previously in ui.R)
+# User Interface object
 ui <- fluidPage(
 
-  titlePanel("Not Edinburgh Rain by D4CAE"),
-
-  # while sidebar is a good place for inputs, mainpanel good for outputs
+  titlePanel("Edinburgh Rainfall by D4CAE"),
+  
   sidebarPanel(
-    selectInput(inputId = "dataset", label = "Inbuilt Datasets set", choices = dataset),
+    selectInput(inputId = "rain_stations", label = "Optionally, select a rainfall station", choices = c(None=',', rain_stations)),
+    verbatimTextOutput("summary"),
+    tableOutput("table"),
+    sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(dataset),
+                value=min(0, nrow(dataset)), step=0.5, round=0),
+    
+#    selectInput('rain_station', 'Rain stationnnnn', c('None', names(dataset))),
+    
     checkboxInput('jitter', 'Jitter'),
     checkboxInput('smooth', 'Smooth'),
     
-    dateRangeInput(inputId = "funDateRange", label = "Dates for something funny"),
+    dateRangeInput(inputId = "myDateRange", label = "Dates for rain, walking in the rain"),
     
+    selectInput('facet_row', 'Facet Row', c(None='.', names(dataset))),
+    selectInput('facet_col', 'Facet Column', c(None='.', names(dataset)))
+
   ),
   
-  # while sidebar is a good place for inputs, mainpanel good for outputs
   mainPanel(
-    "My lovely summery summary",
-    verbatimTextOutput("lovely_summary"),
-    
-    "My not-so-stable troubled table",
-    tableOutput("troubled_table"),
-    
-    )
+   # plotOutput('rainplot')
+  )
 ) 
 
 # Server (previously in server.R)
 # Process the data
 server <- function(input, output, session){
-  output$lovely_summary <- renderPrint({
-    dataset <- get(input$dataset, "package:datasets")
+  output$summary <- renderPrint({
+    dataset <- get(the_HW_input$dataset, "package:datasets")
     summary(dataset)
   })
   
-  output$troubled_table <- renderTable({
-    dataset <- get(input$dataset, "package:datasets")
+  output$table <- renderTable({
+    dataset <- get(the_HW_input$dataset, "package:datasets")
     dataset
   })
-
+  dataset <- reactive({
+    
+    # did the plot first, in wee bit rain script, then put here
+ #   rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
+  #    geom_line()
+    
+  })
+#  output$rainfall_plot <- renderPlot({dataset})
+  
 }
 
 shinyApp(ui, server)
