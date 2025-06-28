@@ -16,19 +16,25 @@ dataset <- ls("package:datasets")
 ui <- fluidPage(
 
   titlePanel("Not Edinburgh Rain by D4CAE"),
-  
+
+  # while sidebar is a good place for inputs, mainpanel good for outputs
   sidebarPanel(
     selectInput(inputId = "dataset", label = "Inbuilt Datasets set", choices = dataset),
-    tableOutput("troubled_table"),
-
-  ),
-  
-  mainPanel(
-    verbatimTextOutput("lovely_summary"),
     checkboxInput('jitter', 'Jitter'),
     checkboxInput('smooth', 'Smooth'),
     
     dateRangeInput(inputId = "funDateRange", label = "Dates for something funny"),
+    
+  ),
+  
+  # while sidebar is a good place for inputs, mainpanel good for outputs
+  mainPanel(
+    "My lovely summery summary",
+    verbatimTextOutput("lovely_summary"),
+    
+    "My not-so-stable troubled table",
+    tableOutput("troubled_table"),
+    
     )
 ) 
 
@@ -40,8 +46,8 @@ server <- function(input, output, session){
     summary(dataset)
   })
   
-  output$table <- renderTable({
-    dataset <- get(input$chosen_inbuilt_dataset, "package:datasets")
+  output$troubled_table <- renderTable({
+    dataset <- get(input$dataset, "package:datasets")
     dataset
   })
 
