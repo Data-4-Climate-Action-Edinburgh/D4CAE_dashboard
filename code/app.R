@@ -8,7 +8,7 @@ rainfall_data <- tibble()
 rainfall_data <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
 
 # Import data and convert dates
-rainfall_data <-   rainfall_data |>
+rainfall_data <- rainfall_data |>
   mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
 
 rain_stations <- unique(rainfall_data$rain_station)
@@ -17,7 +17,7 @@ rain_stations <- unique(rainfall_data$rain_station)
 
 # User Interface object
 ui <- fluidPage(
-
+  
   titlePanel("Edinburgh Rainfall by D4CAE"),
   
   sidebarPanel(
@@ -45,37 +45,40 @@ ui <- fluidPage(
 
 # Server - Process the data
 server <- function(input, output, session){
-
-  drizzly_dataset <- reactive({
+  
+  # Reminder: to use the object returned by reactive, call it like a function with ()
+  # ie rainfall_data_to_plot()
+  rainfall_data_to_plot <- reactive({
     
-    rainfall_data_to_plot <- rainfall_data |> 
+    rainfall_data |> 
       filter(str_detect(rain_station, get(input$chosen_rain_station)))
     
   })
-    
+  
   output$nice_summary <- renderPrint({
     
-    # For now, just narrow down with hard-wired choice, 'Mint'
+    # Even though this is not within reactive, it can still access input! 
+    # Just use reactive to reduce duplication. 
+    chosen_station <- as.character(get(input$chosen_rain_station))
     the_relevant_data <- rainfall_data |>
-      filter(str_detect(rain_station, get(input$chosen_rain_station))) 
+      filter(str_detect(rain_station, chosen_station)) 
     
     summary(the_relevant_data)
   })
   
-
   output$rainplot <- renderPlot({
-    rainfall_data_to_plot |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
+    the_rain_plot <- rainfall_data_to_plot() |> 
+      ggplot(aes(x = MeasurementDate, y = rainfall_in_mm)) +
       geom_line()
-    })
-  
-
-  output$fable_table <- renderTable({
-    rainfall_data_to_plot
-    
-    # workaround, just display narrowed down table
-    #rainfall_data |>
-     # filter(str_detect(rain_station, "Murray"))
+    the_rain_plot
   })
-  }
+  
+  
+  output$fable_table <- renderTable({
+    
+    rainfall_data_to_plot()
+    
+  })
+}
 
 shinyApp(ui, server)
