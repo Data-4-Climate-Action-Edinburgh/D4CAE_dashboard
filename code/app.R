@@ -59,14 +59,17 @@ server <- function(input, output, session){
   
 
   
-  pluie_dataset <- reactive({
-    
-    # did the plot first, in wee bit rain script, then put here 
+  # pluie_dataset <- reactive({
+  #   
+  #   # did the plot first, in wee bit rain script, then put here 
+  #   rainfall_data |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
+  #     geom_line()
+  #   
+  # })
+  output$rainplot <- renderPlot({
     rainfall_data |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
       geom_line()
-    
-  })
-  output$rainplot <- renderPlot({pluie_dataset})
+    })
   
 
   output$fable_table <- renderTable({
