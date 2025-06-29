@@ -51,11 +51,16 @@ server <- function(input, output, session){
   
   # Reminder: to use the object returned by reactive, call it like a function with ()
   # ie rainfall_data_to_plot()
+  # Not sure how my code below differs from posit tutorial
+  # # Create a subset of data filtering for chosen title types
+  # movies_subset <- reactive({
+  #   req(input$selected_type)
+  #   filter(movies, title_type %in% input$selected_type)
+  # })
   rainfall_data_to_plot <- reactive({
-    some_station <- "Harelaw"
-    #some_station <- as.character(get(input$chosen_rain_station))
-    rainfall_data |> 
-      filter(str_detect(rain_station, some_station))
+    req(input$chosen_rain_station)
+      rainfall_data |> 
+      filter(rain_station %in% input$chosen_rain_station)
     
   })
   
@@ -63,9 +68,8 @@ server <- function(input, output, session){
     
     # Even though this is not within reactive, it can still access input! 
     # Just use reactive to reduce duplication. 
-    chosen_station <- as.character(get(input$chosen_rain_station))
     the_relevant_data <- rainfall_data |>
-      filter(str_detect(rain_station, chosen_station)) 
+      filter(rain_station %in% input$chosen_rain_station)
     
     summary(the_relevant_data)
   })
