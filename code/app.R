@@ -31,15 +31,15 @@ ui <- fluidPage(
                 value=min(0, nrow(rainfall_data)), step=0.5, round=0),
     
     dateRangeInput(inputId = "myDateRange", label = "Dates for rain, walking in the rain"),
-
+    
   ),
   
   mainPanel(
     verbatimTextOutput("nice_summary"),
     
-    tableOutput("fable_table")
+    plotOutput('rainplot'),
     
- #    plotOutput('rainplot')
+    tableOutput("fable_table")
   )
 ) 
 
@@ -52,11 +52,23 @@ server <- function(input, output, session){
     
     # For now, just narrow down with hard-wired choice, 'Mint'
     the_relevant_data <- rainfall_data |>
-      filter(str_detect(rain_station, "Murray")) # selected_stn)) 
+      filter(str_detect(rain_station, "Murray")) 
     
     summary(the_relevant_data)
   })
   
+
+  
+  pluie_dataset <- reactive({
+    
+    # did the plot first, in wee bit rain script, then put here 
+    rainfall_data |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
+      geom_line()
+    
+  })
+  output$rainplot <- renderPlot({pluie_dataset})
+  
+
   output$fable_table <- renderTable({
     # not working? 
     #dataset_pour_la_table <- get(input$chosen_rain_stations)
@@ -66,16 +78,6 @@ server <- function(input, output, session){
     rainfall_data |>
       filter(str_detect(rain_station, "Murray"))
   })
-  
-  pluie_dataset <- reactive({
-    
-    # did the plot first, in wee bit rain script, then put here 
- #   rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
-  #    geom_line()
-    
-  })
-#  output$rainfall_plot <- renderPlot({dataset})
-  
-}
+  }
 
 shinyApp(ui, server)
