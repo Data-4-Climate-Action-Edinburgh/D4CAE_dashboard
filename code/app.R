@@ -4,8 +4,10 @@
 library(shiny)
 library(tidyverse)
 
+
 rainfall_data <- tibble()
 rainfall_data <- read_csv("../data/rainfall/aggreg_edinburgh_rainfall.csv")
+# Columns are: Timestamp, rainfall_in_mm, rain_station
 
 # Import data and convert dates
 rainfall_data <- rainfall_data |>
@@ -51,7 +53,7 @@ server <- function(input, output, session){
   rainfall_data_to_plot <- reactive({
     
     rainfall_data |> 
-      filter(str_detect(rain_station, get(input$chosen_rain_station)))
+      filter(str_detect(rain_station, as.character( get(input$chosen_rain_station))))
     
   })
   
@@ -67,10 +69,9 @@ server <- function(input, output, session){
   })
   
   output$rainplot <- renderPlot({
-    the_rain_plot <- rainfall_data_to_plot() |> 
+    rainfall_data_to_plot() |> 
       ggplot(aes(x = MeasurementDate, y = rainfall_in_mm)) +
       geom_line()
-    the_rain_plot
   })
   
   
