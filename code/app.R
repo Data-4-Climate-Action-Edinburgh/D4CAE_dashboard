@@ -12,7 +12,7 @@ rainfall_data <-   rainfall_data |>
   mutate(MeasurementDate = as.POSIXct(Timestamp, format = "%d/%m/%Y")) 
 
 # Allows the ui to draw the input options from the rainfall data eg col names
-dataset <- rainfall_data
+#dataset <- rainfall_data
 
 rain_stations <- unique(rainfall_data$rain_station)
 
@@ -24,9 +24,11 @@ ui <- fluidPage(
   titlePanel("Edinburgh Rainfall by D4CAE"),
   
   sidebarPanel(
-    selectInput(inputId = "chosen_rain_stations", label = "Optionally, select a rainfall station", choices = c(None=',', rain_stations)),
-    sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(dataset),
-                value=min(0, nrow(dataset)), step=0.5, round=0),
+    selectInput(inputId = "chosen_rain_stations", 
+                label = "Optionally, select a rainfall station", 
+                choices = c(None=',', rain_stations)),
+    sliderInput('rainfall_in_mm', 'Amount of rain', min=0, max=nrow(rainfall_data),
+                value=min(0, nrow(rainfall_data)), step=0.5, round=0),
     
     dateRangeInput(inputId = "myDateRange", label = "Dates for rain, walking in the rain"),
 
@@ -65,7 +67,7 @@ server <- function(input, output, session){
       filter(str_detect(rain_station, "Murray"))
   })
   
-  dataset <- reactive({
+  pluie_dataset <- reactive({
     
     # did the plot first, in wee bit rain script, then put here 
  #   rainfall_to_plot |> ggplot(aes(x = MeasurementDate, y = rainfall_in_mm))+
