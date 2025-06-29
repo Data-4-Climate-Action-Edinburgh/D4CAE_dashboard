@@ -25,7 +25,8 @@ ui <- fluidPage(
   sidebarPanel(
     selectInput(inputId = "chosen_rain_station", 
                 label = "Optionally, select a rainfall station", 
-                choices = c(None=',', rain_stations)),
+                choices = rain_stations,
+                selected = "RBGE"),
     
     sliderInput(inputId = 'rainfall_in_mm', 
                 label = 'Amount of rain', 
@@ -51,9 +52,10 @@ server <- function(input, output, session){
   # Reminder: to use the object returned by reactive, call it like a function with ()
   # ie rainfall_data_to_plot()
   rainfall_data_to_plot <- reactive({
-    
+    some_station <- "Harelaw"
+    #some_station <- as.character(get(input$chosen_rain_station))
     rainfall_data |> 
-      filter(str_detect(rain_station, as.character( get(input$chosen_rain_station))))
+      filter(str_detect(rain_station, some_station))
     
   })
   
