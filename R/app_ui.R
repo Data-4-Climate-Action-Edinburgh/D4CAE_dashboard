@@ -10,12 +10,9 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      tags$img("logo_organization_trees_bees_PCs_peeps.png"),
+      tags$img(src = "www/logo_organization_trees_bees_PCs_peeps.png"),
       tabsetPanel(
-        tabPanel("Rainfall 1",
-                 # mod_first_mod_ui("firstmod")
-                 ),
-        tabPanel("Rainfall 2",
+        tabPanel("Rainfall",
                  mod_second_rainfall_ui("secondmod")
                  ),
         tabPanel("Cycling",
