@@ -11,6 +11,7 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
       tags$img(src = "www/logo_organization_trees_bees_PCs_peeps.png"),
+      "Data 4 Climate Action Edinburgh",
       tabsetPanel(
         tabPanel("Rainfall",
                  mod_second_rainfall_ui("secondmod")
