@@ -1,3 +1,6 @@
+# To do: move this script to data prep codebase in the code_etc repo
+# since runapp won't run while there's some issue with the arrange() function.
+
 # read_haduk_temperature_edinburgh.R
 # Read HadUK-Grid NetCDF temperature files and plot temperatures for City of Edinburgh
 #
@@ -62,7 +65,7 @@ parse_nc_time <- function(nc, time_vals) {
 extract_point_timeseries <- function(ncfile, varname, lat0, lon0) {
   nc <- nc_open(ncfile)
   on.exit(nc_close(nc), add = TRUE)
-  
+
   # Get lat/lon variables: HadUK files include 2D latitude and longitude variables
   if ("latitude" %in% names(nc$var)) {
     lat <- ncvar_get(nc, "latitude")
@@ -104,18 +107,18 @@ extract_point_timeseries <- function(ncfile, varname, lat0, lon0) {
   } else {
     stop("Unexpected number of dimensions (", ndims_var, ") in variable ", varname)
   }
-  
+
   # Handle _FillValue or missing_value
   fv <- ncatt_get(nc, varname, "_FillValue")$value
   if (is.null(fv)) fv <- ncatt_get(nc, varname, "missing_value")$value
   if (!is.null(fv)) vals[vals == fv] <- NA
-  
+
   # Time
   time_vals <- ncvar_get(nc, "time")
   times_posix <- parse_nc_time(nc, time_vals)
   # Convert to Date if times are daily (most HadUK day files): round to Date
   dates <- as.Date(times_posix)
-  
+
   tibble(
     date = dates,
     value = as.numeric(vals),
