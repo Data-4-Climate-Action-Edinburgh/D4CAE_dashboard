@@ -10,9 +10,15 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      tags$img(src = "www/logo_organization_trees_bees_PCs_peeps.png",
-               href="https://data-4-climate-action-edinburgh.github.io/home/"),
-      h1(tags$a("Data 4 Climate Action Edinburgh", href="https://data-4-climate-action-edinburgh.github.io/home/")), # h1 formatting is important for accessibility
+      tags$a(
+        href="https://data-4-climate-action-edinburgh.github.io/home/",
+        tags$img(src = "www/D4CAE_org_logo_transparent.png",
+                 alt = "D4CAE logo"),
+        title = "D4CAE homepage",
+        height = "160"
+      ),
+      # h1 formatting is important for accessibility
+      h1("D4CAE Dashboard - Data 4 Climate Action Edinburgh"),
       tabsetPanel(
         tabPanel("Rainfall",
                  mod_second_rainfall_ui("secondmod")
