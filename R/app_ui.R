@@ -10,23 +10,31 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      tags$a(
-        href="https://data-4-climate-action-edinburgh.github.io/home/",
-        tags$img(src = "www/D4CAE_org_logo_transparent.png",
-                 alt = "D4CAE logo"),
-        title = "D4CAE homepage",
-        height = "160"
+      titlePanel(
+        h1(
+          tags$a(
+            href="https://data-4-climate-action-edinburgh.github.io/home/",
+            tags$img(src = "www/D4CAE_org_logo_transparent.png",
+                     alt = "D4CAE logo"),
+            title = "D4CAE homepage",
+            height = "120"
+          ),
+          # h1 formatting is important for accessibility
+          tags$a("D4CAE Dashboard", href="https://data-4-climate-action-edinburgh.github.io/home/"))
       ),
-      # h1 formatting is important for accessibility
-      h1("D4CAE Dashboard - Data 4 Climate Action Edinburgh"),
       tabsetPanel(
         tabPanel("Rainfall",
                  mod_second_rainfall_ui("secondmod")
-                 ),
+        ),
         tabPanel("Cycling",
                  mod_cycling_ui("cycle")
-      )
-      )
+        )
+      ),
+      "Licence: ",
+      tags$a("CC-BY", href = "https://creativecommons.org/licenses/by/4.0/") ,
+      tags$a("Data 4 Climate Action Edinburgh", href = "https://data-4-climate-action-edinburgh.github.io/home/" ) ,
+      ". Built by Ebrahim Makhoul and Pauline Ward using RShiny. See ",
+      tags$a("open-source code", href = "https://github.com/Data-4-Climate-Action-Edinburgh/D4CAE_dashboard")
 
     )
   )
