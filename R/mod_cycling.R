@@ -26,7 +26,7 @@ mod_cycling_ui <- function(id) {
           dateRangeInput(
             inputId = ns("date_range"),
             label = "Select Date Range",
-            start = "2020-01-01",
+            start = "2016-01-01", # We have walking data from 2016
             end = Sys.Date()
           )
         ),
