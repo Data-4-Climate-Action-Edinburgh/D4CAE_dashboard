@@ -12,6 +12,13 @@ Slightly non-intuitive process:
 * Clicked the dataset button to downloaded the CSV file, took under two minutes for the website to make the data ready. 
 * Used the website download feature, top right-hand corner white download icon, then in the menu that opens, click blue download icon to actually get the file to download.  
 
+Combined the data into a single data file for active travel ie cycling and walking as follows: 
+
+cyc_ped_data <- bind_rows(CEC_daily_walking_COD_alldates_allsites_8d227f3f_9478_4524_886c_f8eb2dcd4834, CEC_daily_cycling_COD_alldates_allsites_5344a7be_26dd_4262_8e0a_20a0f9f5de0a)
+
+Add the data to the package as follows: 
+use_data(cyc_ped_data, overwrite = TRUE) 
+
 Point to note: while the cycling and walking data are presented as totally separate datasets, on examining the columns in the two files, they have identical column headings (field names) and appear to be of the same data types. The files differ in the values in the column 'class' (class is "pedestrian" in the walking data, and "cyclist" in the cycling data). 
 
 ## WALKING: City of Edinburgh Council - Daily *WALKING* counts from automatic cycling counters
