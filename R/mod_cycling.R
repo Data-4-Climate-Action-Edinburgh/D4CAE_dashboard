@@ -61,7 +61,7 @@ mod_cycling_server <- function(id){
 
     filtered_data <- reactive({
       # req(data)
-      df <- cycle_data_2 %>%
+      df <- cyc_ped_data %>%
         dplyr::filter(
           class %in% input$class_select,
           startTime >= input$date_range[1],
@@ -73,21 +73,20 @@ mod_cycling_server <- function(id){
     # ---- Time Series Plot ----
     output$time_plot <- plotly::renderPlotly({
       req(filtered_data())
+
       df <- filtered_data() %>%
         dplyr::group_by(class, date = lubridate::as_date(startTime)) %>%
-        dplyr::summarise(total_count = sum(count, na.rm = TRUE), .groups = "drop")
+        dplyr::summarise(
+          total_count = sum(count, na.rm = TRUE),
+          .groups = "drop"
+        )
 
-      p <- ggplot2::ggplot(df, ggplot2::aes(x = date, y = total_count, color = class)) +
-        ggplot2::geom_line(size = 1) +
-        ggplot2::labs(
-          title = "Daily Counts Over Time",
-          x = "Date",
-          y = "Total Count"
-        ) +
-        ggplot2::theme_minimal()
+      p <- time_plot(df)
 
-      plotly::ggplotly(p)
+      plotly::ggplotly(p) %>%
+        plotly::layout(hovermode = "x unified")
     })
+
 
     # ---- Map Plot ----
     output$map_plot <- leaflet::renderLeaflet({
@@ -96,39 +95,28 @@ mod_cycling_server <- function(id){
         dplyr::group_by(location, latitude, longitude) %>%
         dplyr::summarise(avg_count = mean(count, na.rm = TRUE), .groups = "drop")
 
-      leaflet::leaflet(df) %>%
-        leaflet::addTiles() %>%
-        leaflet::addCircleMarkers(
-          lng = ~longitude,
-          lat = ~latitude,
-          popup = ~paste0("<b>", location, "</b><br>Average Count: ", round(avg_count, 1)),
-          radius = ~scales::rescale(avg_count, to = c(4, 12)),
-          color = "#0072B2",
-          fillOpacity = 0.7
-        )
+      map_plot(df)
+
     })
 
     # ---- Bar Plot ----
     output$bar_plot <- plotly::renderPlotly({
       req(filtered_data())
+
       df <- filtered_data() %>%
         dplyr::group_by(location) %>%
-        dplyr::summarise(mean_count = mean(count, na.rm = TRUE)) %>%
+        dplyr::summarise(
+          mean_count = mean(count, na.rm = TRUE),
+          .groups = "drop"
+        ) %>%
         dplyr::arrange(desc(mean_count)) %>%
         dplyr::slice_head(n = 15)
 
-      p <- ggplot2::ggplot(df, ggplot2::aes(x = reorder(location, mean_count), y = mean_count)) +
-        ggplot2::geom_col(fill = "#56B4E9") +
-        ggplot2::coord_flip() +
-        ggplot2::labs(
-          title = "Top 15 Locations by Average Count",
-          x = "Location",
-          y = "Average Count"
-        ) +
-        ggplot2::theme_minimal()
+      p <- bar_plot(df)
 
-      plotly::ggplotly(p)
+      plotly::ggplotly(p, tooltip = c("x", "y"))
     })
+
   })
 }
 
