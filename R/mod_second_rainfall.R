@@ -35,7 +35,7 @@ mod_rainfall_ui <- function(id) {
               )
             ),
             tabPanel(
-              "Total Rainfall by Station",
+              "Total Rainfall over 12 months by Station",
               shinycssloaders::withSpinner(
                 plotOutput(ns("rain_station_plot"), height = "450px")
               )
@@ -101,7 +101,7 @@ mod_rainfall_server <- function(id, data) {
       rain_time_plot(df)
     })
 
-    # ---- Total Rainfall by Station ----
+    # ---- Total Rainfall over 12 months by Station ----
     output$rain_station_plot <- renderPlot({
       df <- filtered_data() %>%
         dplyr::group_by(rain_station) %>%
