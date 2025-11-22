@@ -14,7 +14,7 @@ mod_rainfall_ui <- function(id) {
             inputId = ns("station_select"),
             label = "Select Stations",
             choices = unique(aggreg_edinburgh_rainfall$rain_station),
-            multiple = FALSE,
+            multiple = TRUE,
             options = list(`actions-box` = TRUE)
           ),
           dateRangeInput(
@@ -96,7 +96,7 @@ mod_rainfall_server <- function(id, data) {
     output$rain_time_plot <- renderPlot({
       df <- filtered_data() %>%
         dplyr::group_by(Timestamp) %>%
-        dplyr::summarise(total_rain = sum(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
+        dplyr::summarise(total_rain = mean(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
 
       rain_time_plot(df)
     })
