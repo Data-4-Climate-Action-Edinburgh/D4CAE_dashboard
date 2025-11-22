@@ -14,14 +14,14 @@ mod_rainfall_ui <- function(id) {
             inputId = ns("station_select"),
             label = "Select Stations",
             choices = unique(aggreg_edinburgh_rainfall$rain_station),
-            multiple = TRUE,
+            multiple = FALSE,
             options = list(`actions-box` = TRUE)
           ),
           dateRangeInput(
             inputId = ns("date_range"),
             label = "Date Range",
-            start = "2024-03-23",
-            end = "2025-03-21"
+            start = "2024-11-21",
+            end = "2025-11-20"
           )
         ),
 
@@ -35,7 +35,7 @@ mod_rainfall_ui <- function(id) {
               )
             ),
             tabPanel(
-              "Total Rainfall over 12 months by Station",
+              "Total Rainfall by Station",
               shinycssloaders::withSpinner(
                 plotOutput(ns("rain_station_plot"), height = "450px")
               )
