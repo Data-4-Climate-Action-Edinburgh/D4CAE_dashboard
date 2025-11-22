@@ -7,6 +7,8 @@ See the other github repo for the pre-processing steps / code:
 https://github.com/data4climateactionedinburgh/Data4ClimateActionEdinburgh_Code_etc 
 
 # Read in the CSV file
+library(readr) 
+
 aggreg_edinburgh_rainfall <- readr::read_csv("data/aggreg_edinburgh_rainfall.csv", 
           col_types = cols(
             id = col_character(), 
