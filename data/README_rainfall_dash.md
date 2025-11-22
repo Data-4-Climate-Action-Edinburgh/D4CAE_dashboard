@@ -11,8 +11,8 @@ library(readr)
 
 aggreg_edinburgh_rainfall <- readr::read_csv("data/aggreg_edinburgh_rainfall.csv", 
           col_types = cols(
-            id = col_character(), 
-            Timestamp = col_datetime(), 
+            Timestamp = col_datetime(format = "%d/%m/%Y %H:%M:%S"), 
+            rainfall_in_mm = col_double(),
             rain_station = col_character()
           ) 
 )
