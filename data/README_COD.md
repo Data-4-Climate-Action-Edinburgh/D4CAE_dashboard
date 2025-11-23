@@ -13,10 +13,15 @@ Slightly non-intuitive process:
 * Used the website download feature, top right-hand corner white download icon, then in the menu that opens, click blue download icon to actually get the file to download.  
 
 Combined the data into a single data file for active travel ie cycling and walking as follows: 
+* Imported the two CSV files into the environment as tibbles with read_csv(): 
+CEC_daily_walking_COD_alldates_allsites_8d227f3f_9478_4524_886c_f8eb2dcd4834 <- read_csv("data/CEC_daily_walking_COD_alldates_allsites_8d227f3f-9478-4524-886c-f8eb2dcd4834.csv") 
 
+CEC_daily_cycling_COD_alldates_allsites_5344a7be_26dd_4262_8e0a_20a0f9f5de0a <- read_csv("data/CEC_daily_cycling_COD_alldates_allsites_5344a7be-26dd-4262-8e0a-20a0f9f5de0a.csv") 
+
+* Then combined them in one tibble using bind_rows(): 
 cyc_ped_data <- bind_rows(CEC_daily_walking_COD_alldates_allsites_8d227f3f_9478_4524_886c_f8eb2dcd4834, CEC_daily_cycling_COD_alldates_allsites_5344a7be_26dd_4262_8e0a_20a0f9f5de0a)
 
-Add the data to the package as follows: 
+* Add the data to the package with usething::use_data() as follows, which saves the data as a .rda file in the data folder: 
 use_data(cyc_ped_data, overwrite = TRUE) 
 
 Point to note: while the cycling and walking data are presented as totally separate datasets, on examining the columns in the two files, they have identical column headings (field names) and appear to be of the same data types. The files differ in the values in the column 'class' (class is "pedestrian" in the walking data, and "cyclist" in the cycling data). 

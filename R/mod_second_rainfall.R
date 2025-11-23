@@ -19,6 +19,7 @@ mod_rainfall_ui <- function(id) {
             selected = NULL
           ),
 
+
           # ---- Month-Year Selector ----
           sliderInput(
             inputId = ns("month_range"),
@@ -131,10 +132,11 @@ mod_rainfall_server <- function(id, data) {
     output$rain_time_plot <- plotly::renderPlotly({
       df <- filtered_data() %>%
         dplyr::group_by(Month) %>%
-        dplyr::summarise(total_rain = sum(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
-
+        # Not clear if the below should be sum or mean????
+        dplyr::summarise(total_rain = mean(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
       rain_time_plot(df)
     })
+
 
 
     # ---- Total Rainfall by Station ----

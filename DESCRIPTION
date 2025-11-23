@@ -2,12 +2,16 @@ Package: climatedata
 Title: An Amazing Shiny App
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
+    person(given = "Ebrahim",
+           family = "Makhoul",
            role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
-License: What license is it under?
+           email = "data4climateactionedinburgh@gmail.com"),
+           person(given = "Pauline",
+           family = "Ward",
+           role = c("aut", "cre"),
+           email = "data4climateactionedinburgh@gmail.com") 
+Description: Displays data visualisations relating to climate impacts, and climate action in and around Edinburgh.
+License: Creative Commons Attribution
 Imports: 
     config,
     dplyr,
