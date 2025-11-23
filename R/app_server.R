@@ -8,6 +8,6 @@ app_server <- function(input, output, session) {
   # Your application server logic
   # mod_first_mod_server("firstmod")
   # mod_cycling_server("cycle")
-  mod_rainfall_server("rain1", data = aggreg_edinburgh_rainfall)
+  mod_rainfall_server("rain1", data = aggreg_edinburgh_rainfall2)
   mod_cycling_server("cycle")
 }

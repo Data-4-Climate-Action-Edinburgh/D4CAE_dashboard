@@ -1,5 +1,5 @@
 # ============================
-# RAINFALL UI MODULE
+# RAINFALL UI MODULE (Rewritten)
 # ============================
 mod_rainfall_ui <- function(id) {
   ns <- NS(id)
@@ -10,18 +10,25 @@ mod_rainfall_ui <- function(id) {
         column(
           width = 3,
           h4("Filters"),
-          shinyWidgets::pickerInput(
+
+          # ---- Single Station Dropdown ----
+          selectInput(
             inputId = ns("station_select"),
-            label = "Select Stations",
-            choices = unique(aggreg_edinburgh_rainfall$rain_station),
-            multiple = TRUE,
-            options = list(`actions-box` = TRUE)
+            label = "Select Station",
+            choices = NULL,
+            selected = NULL
           ),
-          dateRangeInput(
-            inputId = ns("date_range"),
-            label = "Date Range",
-            start = "2024-11-21",
-            end = "2025-11-20"
+
+
+          # ---- Month-Year Selector ----
+          sliderInput(
+            inputId = ns("month_range"),
+            label = "Select Date Range (Month-Year)",
+            min = as.Date("2016-04-01"),
+            max = Sys.Date(),
+            value = c(as.Date("2016-04-01"), Sys.Date()),
+            timeFormat = "%b %Y",
+            step = 30 # approx months
           )
         ),
 
@@ -31,19 +38,19 @@ mod_rainfall_ui <- function(id) {
             tabPanel(
               "Rainfall Over Time",
               shinycssloaders::withSpinner(
-                plotOutput(ns("rain_time_plot"), height = "450px")
+                plotly::plotlyOutput(ns("rain_time_plot"), height = "450px")
               )
             ),
             tabPanel(
               "Total Rainfall by Station",
               shinycssloaders::withSpinner(
-                plotOutput(ns("rain_station_plot"), height = "450px")
+                plotly::plotlyOutput(ns("rain_station_plot"), height = "450px")
               )
             ),
             tabPanel(
-              "Daily Summary Table",
+              "Monthly Summary Table",
               shinycssloaders::withSpinner(
-                tableOutput(ns("rain_table"))
+                DT::dataTableOutput(ns("rain_table"))
               )
             )
           )
@@ -55,69 +62,103 @@ mod_rainfall_ui <- function(id) {
 
 
 # ============================
-# RAINFALL SERVER MODULE
+# RAINFALL SERVER MODULE (Rewritten)
 # ============================
 mod_rainfall_server <- function(id, data) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # ---- Convert data to reactive if needed ----
-    get_data <- reactive({
-      if (is.reactive(data)) data() else data
-    })
+    # ---- Use reactive data if provided ----
+    get_data <- reactive({ if (is.reactive(data)) data() else data })
 
-    # ---- Update station picker ----
+    # ---- Update station dropdown ----
     observe({
       df <- get_data()
-
-      shinyWidgets::updatePickerInput(
-        session,
-        inputId = "station_select",
-        choices = sort(unique(df$rain_station)),
-        selected = unique(df$rain_station)
-      )
+      stations <- sort(unique(df$rain_station))
+      updateSelectInput(session, "station_select", choices = stations, selected = stations[1])
     })
 
-    # ---- Filtered data ----
+
+    # ---- Prepare and filter data ----
     filtered_data <- reactive({
       df <- get_data()
 
-      req(input$station_select, input$date_range)
+      req(input$station_select, input$month_range)
+
+      # ---- Convert "May 2024" to Date ----
+      df <- df %>%
+        dplyr::mutate(
+          Timestamp = dplyr::coalesce(
+            suppressWarnings(lubridate::ymd(Timestamp)),
+            lubridate::my(Timestamp)
+          ),
+          Month = lubridate::floor_date(Timestamp, "month")
+        )
 
       df %>%
         dplyr::filter(
-          rain_station %in% input$station_select,
-          Timestamp >= input$date_range[1],
-          Timestamp <= input$date_range[2]
+          rain_station == input$station_select,
+          Month >= input$month_range[1],
+          Month <= input$month_range[2]
         )
     })
 
-    # ---- Rainfall Over Time ----
-    output$rain_time_plot <- renderPlot({
-      df <- filtered_data() %>%
-        dplyr::group_by(Timestamp) %>%
-        dplyr::summarise(total_rain = mean(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
 
+    barchart_data <- reactive({
+      df <- get_data()
+
+      req(input$station_select, input$month_range)
+
+      # ---- Convert "May 2024" to Date ----
+      df <- df %>%
+        dplyr::mutate(
+          Timestamp = dplyr::coalesce(
+            suppressWarnings(lubridate::ymd(Timestamp)),
+            lubridate::my(Timestamp)
+          ),
+          Month = lubridate::floor_date(Timestamp, "month")
+        )
+
+      df %>%
+        dplyr::filter(
+          rain_station != "Edinburgh average",
+          Month >= input$month_range[1],
+          Month <= input$month_range[2]
+        )
+    })
+
+
+    # ---- Rainfall Over Time Plot ----
+    output$rain_time_plot <- plotly::renderPlotly({
+      df <- filtered_data() %>%
+        dplyr::group_by(Month) %>%
+        # Not clear if the below should be sum or mean????
+        dplyr::summarise(total_rain = mean(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
       rain_time_plot(df)
     })
 
-    # ---- Total Rainfall over 12 months by Station ----
-    output$rain_station_plot <- renderPlot({
-      df <- filtered_data() %>%
+
+
+    # ---- Total Rainfall by Station ----
+    output$rain_station_plot <- plotly::renderPlotly({
+      df <- barchart_data() %>%
         dplyr::group_by(rain_station) %>%
         dplyr::summarise(total_rain = sum(rainfall_in_mm, na.rm = TRUE), .groups = "drop") %>%
         dplyr::arrange(total_rain)
 
       rain_station_plot(df)
-
     })
 
-    # ---- Summary Table ----
-    output$rain_table <- renderTable({
+
+    # ---- Nicer Data Table ----
+    output$rain_table <- DT::renderDataTable({
       filtered_data() %>%
-        dplyr::group_by(Timestamp, rain_station) %>%
-        dplyr::summarise(daily_rain_mm = sum(rainfall_in_mm, na.rm = TRUE), .groups = "drop") %>%
-        dplyr::arrange(desc(Timestamp))
-    })
+        dplyr::mutate(
+          Month = format(Month, "%b %Y"),
+          rainfall_in_mm = round(rainfall_in_mm, 2)
+        ) %>%
+        dplyr::select(Month, rain_station, rainfall_in_mm) %>%
+        dplyr::arrange(desc(Month))
+    }, options = list(pageLength = 20, autoWidth = TRUE))
   })
 }
