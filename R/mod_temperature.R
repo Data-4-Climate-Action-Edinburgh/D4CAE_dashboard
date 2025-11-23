@@ -36,14 +36,13 @@ mod_temperature_ui <- function(id) {
 } # end function
 
 
-#' first_mod Server Functions
+#' temperature_mod Server Functions
 #'
 #' @noRd
-mod_first_mod_server <- function(id){
+mod_temperature_server <- function(id){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
-    # rainfall_to_plot <- tibble()
 
   # Import data and convert dates
   rainfall_to_plot <-   rainfall_to_plot |>
