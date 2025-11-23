@@ -20,3 +20,8 @@ aggreg_edinburgh_rainfall <- readr::read_csv("data/aggreg_edinburgh_rainfall.csv
 # Import to data/ so that dashboard can access it as a tibble
 usethis::use_data(aggreg_edinburgh_rainfall, overwrite = TRUE)
 
+# Bugfix
+# The dashboard is not running. Error says it is looking for 
+# aggreg_edinburgh_rainfall2
+# So I have created a copy of aggreg_edinburgh_rainfall 
+# and renamed it aggreg_edinburgh_rainfall2. 
