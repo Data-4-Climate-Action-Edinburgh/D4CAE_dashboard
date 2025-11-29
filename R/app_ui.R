@@ -58,7 +58,8 @@ app_ui <- function(request) {
                  "Data source: SEPA"
         ),
         tabPanel("Active Travel",
-                 mod_cycling_ui("cycle")
+                 mod_cycling_ui("cycle"),
+                 "Data source: Cycling Scotland / City of Edinburgh Council"
         )
       ),
 
