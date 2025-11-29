@@ -51,7 +51,7 @@ app_ui <- function(request) {
       ### ================================
       tabsetPanel(
         tabPanel("Introduction",
-                 includeMarkdown("www/intro.md")
+                 includeMarkdown(system.file("app/www/intro.md", package = "climatedata"))
         ),
         tabPanel("Rainfall",
                  mod_rainfall_ui("rain1")
