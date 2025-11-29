@@ -58,7 +58,7 @@ app_ui <- function(request) {
                  mod_rainfall_ui("rain1"),
                  "Data source: SEPA"
         ),
-        tabPanel("Introduction",
+        tabPanel("Overview",
                  includeMarkdown(system.file("app/www/intro.md", package = "climatedata"))
         ),
         tabPanel("Data sources",
