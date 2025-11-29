@@ -1,6 +1,6 @@
 # README - D4CAE dashboard
 
-This is built using Rshiny golem. 
+This is built using RShiny golem. 
 
 ## To run the app locally: ## 
 
