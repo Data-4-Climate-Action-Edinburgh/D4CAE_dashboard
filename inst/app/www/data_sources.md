@@ -1,10 +1,10 @@
-# Data preparation and documentation
+# Documentation
 
 As an open science organisation, D4CAE's 
-[code for this dashboard](https://github.com/Data-4-Climate-Action-Edinburgh/D4CAE_dashboard) 
+[code for this RShiny dashboard](https://github.com/Data-4-Climate-Action-Edinburgh/D4CAE_dashboard) 
 is open source.  
 
-To keep the dashboard Rshiny app itself streamlined, the data preparation steps 
+To keep the dashboard app itself streamlined, the data preparation steps 
 and intermediate data files are in 
 [a separate code repository also on GitHub](https://github.com/data4climateactionedinburgh/Data4ClimateActionEdinburgh_Code_etc) . 
 
