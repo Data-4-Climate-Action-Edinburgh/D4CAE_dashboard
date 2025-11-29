@@ -60,6 +60,10 @@ app_ui <- function(request) {
         tabPanel("Active Travel",
                  mod_cycling_ui("cycle"),
                  "Data source: Cycling Scotland / City of Edinburgh Council"
+        ),
+        tabPanel("Data sources",
+                 includeMarkdown(system.file("app/www/data_sources.md", package = "climatedata"))
+
         )
       ),
 
