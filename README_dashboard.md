@@ -11,11 +11,14 @@ This is built using Rshiny golem.
  run_app()
 
 ## To import the rainfall data ## 
+## Monthly rainfall only at present ##
 
 library(readr) 
+
 library(here)
 
-aggreg_edinburgh_rainfall2 <- readr::read_csv(here("data", "MONTHLY_aggreg_edinburgh_rainfall.csv"))
+aggreg_edinburgh_rainfall <- readr::read_csv(here("data", "aggreg_edinburgh_rainfall.csv"))
+# old # aggreg_edinburgh_rainfall2 <- readr::read_csv(here("data", "MONTHLY_aggreg_edinburgh_rainfall.csv"))
 
 # Import to data/ as .rda so that dashboard can access it as a tibble
 usethis::use_data(aggreg_edinburgh_rainfall, overwrite = TRUE)
@@ -29,3 +32,4 @@ cyc_ped_data <- read_csv(here("data", "cyc_ped_data.csv"))
 
 # Import to data/ as a .rda file so that dashboard can access it as a tibble
 usethis::use_data(cyc_ped_data, overwrite = TRUE)
+
