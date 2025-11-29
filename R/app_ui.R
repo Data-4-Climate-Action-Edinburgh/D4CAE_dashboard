@@ -55,7 +55,7 @@ app_ui <- function(request) {
         tabPanel("Rainfall",
                  mod_rainfall_ui("rain1")
         ),
-        tabPanel("Active moving",
+        tabPanel("Active Travel",
                  mod_cycling_ui("cycle")
         )
       ),
