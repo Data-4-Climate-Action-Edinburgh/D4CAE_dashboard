@@ -74,7 +74,14 @@ mod_rainfall_server <- function(id, data) {
     # ---- Update station dropdown ----
     observe({
       df <- get_data()
-      stations <- sort(unique(df$rain_station))
+
+      stations <- unique(df$rain_station)
+
+      # Simple: alphabetical except last item
+      stations <- sort(stations[stations != "Edinburgh average"])
+      stations <- c(stations, "Edinburgh average")
+
+
       updateSelectInput(session, "station_select", choices = stations, selected = stations[1])
     })
 
@@ -134,7 +141,24 @@ mod_rainfall_server <- function(id, data) {
         dplyr::group_by(Month) %>%
         # Not clear if the below should be sum or mean????
         dplyr::summarise(total_rain = mean(rainfall_in_mm, na.rm = TRUE), .groups = "drop")
-      rain_time_plot(df)
+
+
+      plotly::ggplotly(rain_time_plot(df)) %>%
+        plotly::layout(
+          hovermode = "x unified",
+          yaxis = list(title = ""),
+          annotations = list(
+            list(
+              x = -0.125, y = 0.5,
+              text = "Rainfall\n(mm)",
+              xref = "paper", yref = "paper",
+              showarrow = FALSE,
+              textangle = 0,
+              font = list(size = 16)
+            )
+          )
+        )
+
     })
 
 
@@ -146,7 +170,7 @@ mod_rainfall_server <- function(id, data) {
         dplyr::summarise(total_rain = sum(rainfall_in_mm, na.rm = TRUE), .groups = "drop") %>%
         dplyr::arrange(total_rain)
 
-      rain_station_plot(df)
+      plotly::ggplotly(rain_station_plot(df), tooltip = "text")
     })
 
 
