@@ -50,7 +50,8 @@ app_ui <- function(request) {
       ### MAIN APP TABS
       ### ================================
       tabsetPanel(
-        tabPanel("Introduction"
+        tabPanel("Introduction",
+                 includeMarkdown("www/intro.md")
         ),
         tabPanel("Rainfall",
                  mod_rainfall_ui("rain1")
