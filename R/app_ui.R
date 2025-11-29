@@ -50,13 +50,20 @@ app_ui <- function(request) {
       ### MAIN APP TABS
       ### ================================
       tabsetPanel(
-        tabPanel("Introduction"
+        tabPanel("Active Travel",
+                 mod_cycling_ui("cycle"),
+                 "Data source: Cycling Scotland / City of Edinburgh Council"
         ),
         tabPanel("Rainfall",
-                 mod_rainfall_ui("rain1")
+                 mod_rainfall_ui("rain1"),
+                 "Data source: SEPA"
         ),
-        tabPanel("Active Travel",
-                 mod_cycling_ui("cycle")
+        tabPanel("Overview",
+                 includeMarkdown(system.file("app/www/intro.md", package = "climatedata"))
+        ),
+        tabPanel("Data sources",
+                 includeMarkdown(system.file("app/www/data_sources.md", package = "climatedata"))
+
         )
       ),
 

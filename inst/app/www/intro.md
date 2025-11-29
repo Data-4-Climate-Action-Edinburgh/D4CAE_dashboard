@@ -1,0 +1,16 @@
+# Purpose 
+This dashboard: 
+* is a platform for data from climate action groups in Edinburgh
+* presents datavizzes on climate impacts, climate action and biodiversity in Edinburgh 
+* offers interactive versions of charts from the 
+[Data 4 Climate Action Edinburgh annual report](https://data-4-climate-action-edinburgh.github.io/home/Publications/) 
+* is an outlet for skills development for the volunteers of D4CAE
+
+# Contact us
+Got an idea to improve this dashboard?   
+
+Got some data / a chart you'd like us to add?   
+
+Got a question?
+
+Drop us a line! Data4ClimateActionEdinburgh@gmail.com 
