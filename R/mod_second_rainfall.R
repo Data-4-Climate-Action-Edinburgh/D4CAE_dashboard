@@ -182,7 +182,12 @@ mod_rainfall_server <- function(id, data) {
           rainfall_in_mm = round(rainfall_in_mm, 2)
         ) %>%
         dplyr::select(Month, rain_station, rainfall_in_mm) %>%
+        dplyr::rename(
+          "Station" = rain_station,
+          "Rainfall (mm)" = rainfall_in_mm
+        ) %>%
         dplyr::arrange(desc(Month))
     }, options = list(pageLength = 20, autoWidth = TRUE))
+
   })
 }
