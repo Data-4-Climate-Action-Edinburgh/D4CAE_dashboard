@@ -35,7 +35,11 @@ rain_station_plot <- function(data) {
   ggplot(data, aes(
     x = reorder(rain_station, total_rain),
     y = total_rain,
-    fill = total_rain
+    fill = total_rain,
+    text = paste0(
+      "<b>Station:</b> ", rain_station, "<br>",
+      "<b>Total Rainfall:</b> ", round(total_rain, 1), " mm"
+    )
   )) +
     geom_col(show.legend = FALSE) +
     coord_flip() +
@@ -69,7 +73,7 @@ time_plot <- function(data) {
   ) +
     ggplot2::geom_line(linewidth = 1, alpha = 0.9) +
     ggplot2::scale_x_date(
-      date_labels = "%b %d",
+      date_labels = "%Y",
       expand = ggplot2::expansion(mult = c(0.01, 0.01)),
       guide = ggplot2::guide_axis(check.overlap = TRUE)
     ) +
@@ -85,13 +89,13 @@ time_plot <- function(data) {
       plot.title       = ggplot2::element_text(face = "bold", size = 16),
       axis.text.x      = ggplot2::element_text(angle = 45, hjust = 1),
       legend.position  = "top",
-      legend.title     = ggplot2::element_text(face = "bold"),
+      # legend.title     = ggplot2::element_text(face = "bold"),
       plot.background  = ggplot2::element_rect(fill = "white", colour = NA),
       panel.grid.minor = ggplot2::element_blank(),
-      axis.title.y = element_text(angle = 90, vjust = 0.5)
-
+      axis.title.y     = ggplot2::element_text(angle = 0, vjust = 0.5)   # <--- HERE
     )
 }
+
 
 
 
@@ -119,7 +123,11 @@ bar_plot <- function(data) {
     data,
     ggplot2::aes(
       x = reorder(location, mean_count),
-      y = mean_count
+      y = mean_count,
+      text = paste0(
+        "<b>Location:</b> ", location, "<br>",
+        "<b>Average Count:</b> ", round(mean_count, 1)
+      )
     )
   ) +
     ggplot2::geom_col(
