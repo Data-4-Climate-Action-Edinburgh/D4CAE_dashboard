@@ -16,7 +16,7 @@
   "organization": "D4CAE",
   "deployment": {
     "platform": "Posit Connect",
-    "url": "https://<your-posit-connect-url>/content/<content-id>/",
+    "url": "https://data4climateactionedinburgh-d4cae-dashboard.share.connect.posit.cloud",
     "deployed_with": "rsconnect"
   },
   "version": "1.0.0"
