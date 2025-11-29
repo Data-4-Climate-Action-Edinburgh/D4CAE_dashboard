@@ -1,11 +1,12 @@
 {
-  "app_name": "d4cae_dashboard",
+  "app_name": "D4CAE Dashboard",
   "app_type": "shiny",
-  "description": "An interactive dashboard for D4CAE project analytics and visualization.",
-  "entry_point": "app.R",
+  "description": "A dashboard for interactive visualisation of data relating to climate impacts, and climate action in and around Edinburgh.",
+  "entry_point": "run_app.R",
   "dependencies": ["shiny", "ggplot2", "dplyr"],
-  "author": "Your Name",
-  "organization": "Your Organization",
+  "author": "Ebrahim Makhoul",
+  "author": "Pauline Ward",
+  "organization": "D4CAE",
   "deployment": {
     "platform": "Posit Connect",
     "url": "https://<your-posit-connect-url>/content/<content-id>/",
