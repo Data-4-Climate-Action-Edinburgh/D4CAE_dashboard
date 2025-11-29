@@ -1,12 +1,12 @@
 {
   "app_name": "D4CAE Dashboard",
   "app_type": "shiny",
-  "description": "A dashboard for interactive visualisation of data relating to climate impacts, and climate action in and around Edinburgh.",
+  "description": "A dashboard for interactive visualisation of data relating to climate impacts, and climate action, in and around Edinburgh.",
   "entry_point": "run_app.R",
   "dependencies": ["shiny", "ggplot2", "dplyr"],
   "authors": [
     {
-      "name": "Ebrahim Makhoul",
+      "name": "Ebrahim Makhoul"
     },
     {
       "name": "Pauline Ward",
