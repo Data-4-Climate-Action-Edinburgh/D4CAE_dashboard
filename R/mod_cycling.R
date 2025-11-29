@@ -18,7 +18,7 @@ mod_cycling_ui <- function(id) {
           shinyWidgets::pickerInput(
             inputId = ns("class_select"),
             label = "Select Class",
-            choices = c("pedestrian", "cycle"),
+            choices = c("Pedestrians" = "pedestrian", "Cyclists" = "cycle"),
             selected = "pedestrian",
             multiple = TRUE,
             options = list(`actions-box` = TRUE)
@@ -84,7 +84,20 @@ mod_cycling_server <- function(id){
       p <- time_plot(df)
 
       plotly::ggplotly(p) %>%
-        plotly::layout(hovermode = "x unified")
+        plotly::layout(
+          hovermode = "x unified",
+          yaxis = list(title = ""),
+          annotations = list(
+            list(
+              x = -0.125, y = 0.5,
+              text = "Count",
+              xref = "paper", yref = "paper",
+              showarrow = FALSE,
+              textangle = 0,
+              font = list(size = 16)
+            )
+          )
+        )
     })
 
 
@@ -114,7 +127,7 @@ mod_cycling_server <- function(id){
 
       p <- bar_plot(df)
 
-      plotly::ggplotly(p, tooltip = c("x", "y"))
+      plotly::ggplotly(p, tooltip = "text")
     })
 
   })
