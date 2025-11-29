@@ -1,8 +1,16 @@
 # Data preparation and documentation
 
+As an open science organisation, D4CAE's 
+[code for this dashboard](https://github.com/Data-4-Climate-Action-Edinburgh/D4CAE_dashboard) 
+is open source.  
+
 To keep the dashboard Rshiny app itself streamlined, the data preparation steps 
-and intermediate data files are in a separate code repository also on GitHub: 
-https://github.com/data4climateactionedinburgh/Data4ClimateActionEdinburgh_Code_etc . 
+and intermediate data files are in 
+[a separate code repository also on GitHub](https://github.com/data4climateactionedinburgh/Data4ClimateActionEdinburgh_Code_etc) . 
+
+* [README_rainfall_prep.md](https://github.com/data4climateactionedinburgh/Data4ClimateActionEdinburgh_Code_etc/blob/main/data/rainfall/README_rainfall_prep.md) 
+
+* [README_COD.md](https://github.com/data4climateactionedinburgh/Data4ClimateActionEdinburgh_Code_etc/blob/main/data/walking/README_COD.md) 
 
 # Acknowledgments
 ## Rainfall
