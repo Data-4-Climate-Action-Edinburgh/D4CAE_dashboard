@@ -54,7 +54,8 @@ app_ui <- function(request) {
                  includeMarkdown(system.file("app/www/intro.md", package = "climatedata"))
         ),
         tabPanel("Rainfall",
-                 mod_rainfall_ui("rain1")
+                 mod_rainfall_ui("rain1"),
+                 "Data source: SEPA"
         ),
         tabPanel("Active Travel",
                  mod_cycling_ui("cycle")
