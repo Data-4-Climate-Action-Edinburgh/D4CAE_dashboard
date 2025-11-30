@@ -5,7 +5,9 @@ This is built using RShiny golem.
 ## To run the app locally: ## 
 
  library(devtools) 
-
+ 
+ document()
+ 
  load_all() 
 
  run_app()
@@ -50,6 +52,6 @@ DEPRECATED golem::add_rstudioconnect_file()
 golem::add_shinyappsio_file()
 
 golem::add_positconnect_file()
-to run call:
+to run deployment TO SHINYAPPS.IO call:
   rsconnect::deployApp()
 
