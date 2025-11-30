@@ -5,6 +5,3 @@
 pkgload::load_all(export_all = FALSE,helpers = FALSE,attach_testthat = FALSE)
 options( "golem.app.prod" = TRUE)
 climatedata::run_app() # add parameters here (if any)
-
-to run call:
-  rsconnect::deployApp()

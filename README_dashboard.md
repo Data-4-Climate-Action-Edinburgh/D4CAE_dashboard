@@ -50,4 +50,6 @@ DEPRECATED golem::add_rstudioconnect_file()
 golem::add_shinyappsio_file()
 
 golem::add_positconnect_file()
+to run call:
+  rsconnect::deployApp()
 
