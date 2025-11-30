@@ -2,7 +2,7 @@
   "app_name": "D4CAE Dashboard",
   "app_type": "shiny",
   "description": "A dashboard for interactive visualisation of data relating to climate impacts, and climate action, in and around Edinburgh.",
-  "entry_point": "run_app.R",
+  "entry_point": "R/run_app.R",
  "authors": [
     {
       "name": "Ebrahim Makhoul"
