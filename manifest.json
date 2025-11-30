@@ -109,6 +109,9 @@
         "RemoteSha": "0.34.0"
       }
     },
+    {
+      "name": "litedown"
+    },
     "KernSmooth": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
