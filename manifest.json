@@ -62,7 +62,22 @@
         "Built": "R 4.5.0; ; 2025-06-16 00:32:38 UTC; windows"
       }
     },
-    "DT": {
+"markdown": {
+  "Source": "CRAN",
+  "Repository": "https://cran.rstudio.com",
+  "description": {
+    "Package": "markdown",
+    "Title": "Markdown Rendering for R",
+    "Version": "1.12",
+    "Authors@R": "c(person(\"Yihui\", \"Xie\", email = \"yihui@rstudio.com\", role = c(\"aut\", \"cre\")))",
+    "Description": "Provides R bindings to the 'Markdown' rendering library, enabling the conversion of Markdown-formatted text into HTML or other formats.",
+    "License": "GPL-3",
+    "URL": "https://github.com/rstudio/markdown",
+    "Maintainer": "Yihui Xie <yihui@rstudio.com>",
+    "Repository": "CRAN"
+  }
+}
+ "DT": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
       "description": {

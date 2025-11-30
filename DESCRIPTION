@@ -21,7 +21,9 @@ Imports:
     shiny,
     shinycssloaders,
     shinyWidgets,
-    units
+    units,
+    markdown,
+    litedown
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
