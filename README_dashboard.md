@@ -43,3 +43,11 @@ library("rsconnect")
 # select option 1 snapshot without covrpage and rhub since covrpage does an error about the R version
 deployApp(appPrimaryDoc = "R/run_app.R")
 
+Trying "Each of these platforms has its own function to create an app.R file that is to be used as a launch script of each platform...
+
+DEPRECATED golem::add_rstudioconnect_file()
+
+golem::add_shinyappsio_file()
+
+golem::add_positconnect_file()
+

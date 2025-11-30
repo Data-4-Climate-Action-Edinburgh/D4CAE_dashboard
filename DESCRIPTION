@@ -17,6 +17,7 @@ Imports:
     dplyr,
     golem,
     leaflet,
+    pkgload,
     shiny,
     shinycssloaders,
     shinyWidgets,
