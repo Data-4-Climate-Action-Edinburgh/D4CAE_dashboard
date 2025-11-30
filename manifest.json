@@ -1,9 +1,12 @@
 {
-  "app_name": "D4CAE Dashboard",
+  "version": 1,
+  "locale": "en_GB",
+  "platform": "4.5.1",
+    "app_name": "D4CAE Dashboard",
   "app_type": "shiny",
   "description": "A dashboard for interactive visualisation of data relating to climate impacts, and climate action, in and around Edinburgh.",
-  "entry_point": "R/run_app.R",
- "authors": [
+  "entry_point": "run_app.R",
+  "authors": [
     {
       "name": "Ebrahim Makhoul"
     },
@@ -13,14 +16,7 @@
     }
   ],
   "organization": "D4CAE",
-  "deployment": {
-    "platform": "Posit Connect",
-    "url": "https://<your-posit-connect-url>/content/<content-id>/",
-    "deployed_with": "rsconnect"
-  },
-  "version": 1,
-  "locale": "en_GB",
-  "platform": "4.5.1",
+
   "metadata": {
     "appmode": "shiny",
     "primary_rmd": null,
@@ -5476,6 +5472,9 @@
     ".Rbuildignore": {
       "checksum": "4f7be25f9c417a04801709a9691909f8"
     },
+    "app.R": {
+      "checksum": "4d19509f058abc65cfd23c7353a7c94c"
+    },
     "data/aggreg_edinburgh_rainfall.csv": {
       "checksum": "f78d0397836a2971181a6457cac2905d"
     },
@@ -5507,7 +5506,7 @@
       "checksum": "4442219e67ab6aa4886caa149dafe056"
     },
     "DESCRIPTION": {
-      "checksum": "de5331e784ed780a690334b9e98f0a7b"
+      "checksum": "8ce8a671209058af156bb67415ede5ef"
     },
     "dev/01_start.R": {
       "checksum": "c09b1e0e8242d654bf83cae342ea5fd4"
@@ -5549,13 +5548,10 @@
       "checksum": "3db85577d623ecb7cd8e9d714cf68304"
     },
     "man/run_app.Rd": {
-      "checksum": "eb32a8dff09564aea287fdd742e2140d"
+      "checksum": "db153f001c7c98594f4a6e64193fbf8a"
     },
     "NAMESPACE": {
-      "checksum": "dac8a4a3531160bf07278f6f2c30358f"
-    },
-    "old_manifest.json": {
-      "checksum": "78012d8a2a3df5b71d7e56a1c132e1a2"
+      "checksum": "926d6e055a1f58e16cc89f7220c24674"
     },
     "R/app_config.R": {
       "checksum": "7d646ad97bcbe68a67831834b789c157"
@@ -5577,9 +5573,6 @@
     },
     "R/mod_temperature.R": {
       "checksum": "dbb19c8679800157fd5c6b6a0d5eb3cd"
-    },
-    "R/run_app.R": {
-      "checksum": "4d19509f058abc65cfd23c7353a7c94c"
     },
     "README_dashboard.md": {
       "checksum": "2bc26b67976816b8cebdec136c364c0a"
