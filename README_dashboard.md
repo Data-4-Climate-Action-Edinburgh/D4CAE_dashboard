@@ -33,3 +33,13 @@ cyc_ped_data <- read_csv(here("data", "cyc_ped_data.csv"))
 # Import to data/ as a .rda file so that dashboard can access it as a tibble
 usethis::use_data(cyc_ped_data, overwrite = TRUE)
 
+# Deployment woes
+# Some attempts to deploy to the web
+# Posit connect would not work with the structure
+# for shinyapps.io
+# First got token and ran rsconnect setup code
+# After that to deploy: 
+library("rsconnect")
+# select option 1 snapshot without covrpage and rhub since covrpage does an error about the R version
+deployApp(appPrimaryDoc = "R/run_app.R")
+

@@ -2,6 +2,21 @@
   "version": 1,
   "locale": "en_GB",
   "platform": "4.5.1",
+    "app_name": "D4CAE Dashboard",
+  "app_type": "shiny",
+  "description": "A dashboard for interactive visualisation of data relating to climate impacts, and climate action, in and around Edinburgh.",
+  "entry_point": "run_app.R",
+  "authors": [
+    {
+      "name": "Ebrahim Makhoul"
+    },
+    {
+      "name": "Pauline Ward",
+      "email": "data4climateactionedinburgh@gmail.com"
+    }
+  ],
+  "organization": "D4CAE",
+
   "metadata": {
     "appmode": "shiny",
     "primary_rmd": null,
