@@ -62,7 +62,7 @@ app_ui <- function(request) {
                  includeMarkdown(system.file("app/www/intro.md", package = "climatedata"))
         ),
         tabPanel("Data sources",
-                 includeMarkdown(system.file("app/www/data_sources.md", package = "climatedata"))
+                 includeHTML(system.file("app/www/data_sources.html", package = "climatedata"))
 
         )
       ),
