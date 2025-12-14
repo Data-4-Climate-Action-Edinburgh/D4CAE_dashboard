@@ -11,6 +11,10 @@ This is built using RShiny golem.
  load_all() 
 
  run_app()
+ 
+## Any time a file or dependency changes, need to update the manifest like so: 
+rsconnect::writeManifest(appPrimaryDoc = "R/run_app.R") 
+
 
 ## To import the rainfall data ## 
 ## Monthly rainfall only at present ##
