@@ -59,10 +59,10 @@ app_ui <- function(request) {
                  "Data source: SEPA"
         ),
         tabPanel("Overview",
-                 includeMarkdown(system.file("app/www/intro.md", package = "climatedata"))
+                 includeHTML(system.file("app/www/intro.html", package = "climatedata"))
         ),
         tabPanel("Data sources",
-                 includeMarkdown(system.file("app/www/data_sources.md", package = "climatedata"))
+                 includeHTML(system.file("app/www/data_sources.html", package = "climatedata"))
 
         )
       ),
