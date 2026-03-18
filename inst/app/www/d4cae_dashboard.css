@@ -25,3 +25,37 @@ h2 {
   border-radius: 6px;
   width: 100%;
 }
+
+
+/* Primary button (green) */
+.btn-primary {
+  background-color: #548235 !important;
+  border-color: #548235 !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #3e6428 !important;
+  border-color: #3e6428 !important;
+}
+
+/* Warning button (yellow) */
+.btn-warning {
+  background-color: #fff200 !important;
+  border-color: #fff200 !important;
+  color: black !important;
+  font-weight: 600;
+}
+
+.btn-warning:hover {
+  background-color: #e6d900 !important;
+  border-color: #e6d900 !important;
+}
+
+
+.filter-box {
+  background-color: #e6d700;
+  padding: 15px;
+  border-radius: 8px;
+}

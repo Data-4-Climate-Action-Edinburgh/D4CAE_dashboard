@@ -8,7 +8,7 @@
 rain_time_plot <- function(data) {
 
   ggplot(data, aes(x = Month, y = total_rain)) +
-    geom_line(color = "#0072B2", linewidth = 1.2) +
+    geom_line(color = "#548235", linewidth = 1.2) +
     labs(
       title = "Rainfall Over Time",
       subtitle = "Total rainfall across selected stations",
@@ -43,7 +43,7 @@ rain_station_plot <- function(data) {
   )) +
     geom_col(show.legend = FALSE) +
     coord_flip() +
-    scale_fill_gradient(low = "#56B4E9", high = "#0072B2") +
+    scale_fill_gradient(low = "#fff200", high = "#548235") +
     labs(
       title = "Total Rainfall by Station",
       x = "",
@@ -71,30 +71,43 @@ time_plot <- function(data) {
       color = class
     )
   ) +
-    ggplot2::geom_line(linewidth = 1, alpha = 0.9) +
+    ggplot2::geom_line(linewidth = 0.6, alpha = 0.9) +   # thinner line
     ggplot2::scale_x_date(
       date_labels = "%Y",
-      expand = ggplot2::expansion(mult = c(0.01, 0.01)),
-      guide = ggplot2::guide_axis(check.overlap = TRUE)
+      date_breaks = "1 year",
+      expand = ggplot2::expansion(mult = c(0.01, 0.02))
     ) +
-    ggplot2::scale_color_brewer(palette = "Set2") +
+    ggplot2::scale_y_continuous(labels = scales::comma) +
+    # ggplot2::scale_color_brewer(palette = "Dark2") +
+    ggplot2::scale_color_manual(values = active_travellers) +
     ggplot2::labs(
       title = "Daily Counts Over Time",
-      x = "",
+      subtitle = "Trends by class",
+      x = NULL,
       y = "Count",
-      color = "Class"
+      color = NULL
     ) +
     ggplot2::theme_minimal(base_size = 14) +
     ggplot2::theme(
-      plot.title       = ggplot2::element_text(face = "bold", size = 16),
-      axis.text.x      = ggplot2::element_text(angle = 45, hjust = 1),
-      legend.position  = "top",
-      # legend.title     = ggplot2::element_text(face = "bold"),
-      plot.background  = ggplot2::element_rect(fill = "white", colour = NA),
+      plot.title = ggplot2::element_text(face = "bold", size = 16, hjust = 0),
+      plot.subtitle = ggplot2::element_text(size = 12, color = "gray30"),
+
+      axis.title.y = ggplot2::element_text(face = "bold"),
+      axis.text.x = ggplot2::element_text(size = 11),
+      axis.text.y = ggplot2::element_text(size = 11),
+
       panel.grid.minor = ggplot2::element_blank(),
-      axis.title.y     = ggplot2::element_text(angle = 0, vjust = 0.5)   # <--- HERE
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_line(linewidth = 0.3, color = "grey85"),
+
+      legend.position = "top",
+      legend.text = ggplot2::element_text(size = 11),
+
+      plot.background = ggplot2::element_rect(fill = "white", colour = NA),
+      plot.margin = ggplot2::margin(10, 15, 10, 20)
     )
 }
+
 
 
 
@@ -131,7 +144,7 @@ bar_plot <- function(data) {
     )
   ) +
     ggplot2::geom_col(
-      fill = "#4C97FF",
+      fill = "#548235",
       width = 0.65
     ) +
     ggplot2::coord_flip() +
